@@ -1,0 +1,87 @@
+---
+- hosts: localhost
+  become: yes
+
+  tasks:
+    # Terminate EC2 instances
+    - name: Terminate EC2 instances
+      ec2:
+        instance_ids:
+          - "i-07451a34adf70c089" # Replace with your instance ID
+        state: absent
+        region: "us-east-1"
+        aws_access_key: ""
+        aws_secret_key: ""
+
+    # Delete security group
+    - name: Delete security group
+      ec2_group:
+        name: "shivam-sg"
+        region: "us-east-1"
+        aws_access_key: ""
+        aws_secret_key: ""
+        group_id: "sg-0e65de0c7b014a862"
+        state: absent
+
+    # Delete private route table
+    - name: Delete private route table
+      ec2_vpc_route_table:
+        vpc_id: "vpc-0ce1dd928210a2a55" # Replace with your VPC ID
+        region: "us-east-1"
+        route_table_id: "rtb-004deedacc6a0021b"
+        state: absent
+        aws_access_key: ""
+        aws_secret_key: ""
+
+    # Delete public route table
+    - name: Delete public route table
+      ec2_vpc_route_table:
+        vpc_id: "vpc-0ce1dd928210a2a55" # Replace with your VPC ID
+        region: "us-east-1"
+        route_table_id: "rtb-0fa5fc57613d27f5f"
+        state: absent
+        aws_access_key: ""
+        aws_secret_key: ""
+
+    # Delete private subnet
+    - name: Delete private subnet
+      ec2_vpc_subnet:
+        vpc_id: "vpc-0ce1dd928210a2a55" # Replace with your VPC ID
+        region: "us-east-1"
+        state: absent
+        cidr: "10.0.16.0/20"
+        resource_tags:
+          Name: shivam-pub
+        aws_access_key: ""
+        aws_secret_key: ""
+
+    # Delete public subnet
+    - name: Delete public subnet
+      ec2_vpc_subnet:
+        vpc_id: "vpc-0ce1dd928210a2a55" # Replace with your VPC ID
+        region: "us-east-1"
+        state: absent
+        cidr: "10.0.0.0/20"
+        resource_tags:
+          Name: shivam-pub
+        aws_access_key: ""
+        aws_secret_key: ""
+
+    # Delete Internet Gateway
+    - name: Delete Internet Gateway
+      ec2_vpc_igw:
+        region: "us-east-1"
+        state: absent
+        vpc_id: "vpc-0ce1dd928210a2a55" # Replace with your VPC ID
+        aws_access_key: ""
+        aws_secret_key: ""
+
+    # Delete VPC
+    - name: Delete VPC
+      ec2_vpc_net:
+        cidr_block: "10.0.0.0/16" # Use the same CIDR block as the VPC being deleted
+        name: "shivam-vpc"
+        region: "us-east-1"
+        state: absent
+        aws_access_key: ""
+        aws_secret_key: ""
