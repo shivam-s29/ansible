@@ -1,0 +1,25 @@
+aws_access_key: ""
+aws_secret_key: ""
+title: "ARTH"
+
+vpc_name: out_vpc
+vpc_cidr_block: '11.0.0.0/16'
+region: "us-east-1"
+
+igw_name: my-igw
+
+pubzone: us-east-1a
+pubsubnet_cidr_block: '11.0.0.0/20'
+pubsubnet_name: my-pub
+
+pvtzone: us-east-1b
+pvtsubnet_cidr_block: '11.0.16.0/20'
+pvtsubnet_name: my-pvt
+
+pubroute_table_name: my-pub-rt
+pvtroute_table_name: my-pvt-rt
+
+security_group_name: web-sg
+
+instance_name: outline-instance
+type: t2.micro
